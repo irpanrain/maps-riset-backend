@@ -17,7 +17,7 @@ class SampleGeoController extends Controller
         $count = $this->getCountData('latest_position');
         // dd($count); //83
         if ($request->limit > 9 && $request->limit < 101) {
-            $limit = (int)round((10*$count)/$request->limit);
+            $limit = (int)round((10*$count)/$request->limit); //modify limit as request zoom in/out client
             $data  = DB::select('SELECT *, ST_AsGeoJson(geom) AS geometry FROM latest_position LIMIT '.$limit);
         }
 
@@ -33,7 +33,7 @@ class SampleGeoController extends Controller
         $count = $this->getCountData('previous_position');
         // dd($count); //529
         if ($request->limit > 9 && $request->limit < 101) {
-            $limit = (int)round((10*$count)/$request->limit);
+            $limit = (int)round((10*$count)/$request->limit); //modify limit as request zoom in/out client
             $data = DB::select('SELECT *, ST_AsGeoJson(geom) AS geometry, ST_X(geom::geometry) AS lng, ST_Y(geom::geometry) AS lat
                             FROM previous_position LIMIT '.$limit);
         }
